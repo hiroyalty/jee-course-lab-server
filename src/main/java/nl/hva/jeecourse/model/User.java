@@ -7,6 +7,16 @@ import javax.persistence.Id;
 @Entity
 public class User {
 
+    public User(String login, String name, String password) {
+        setLogin(login);
+        setName(name);
+        setPassword(password);
+    }
+
+    public User() {
+
+    }
+
     @Id
     private String login;
 

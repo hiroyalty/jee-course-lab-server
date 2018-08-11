@@ -12,6 +12,9 @@ public interface Repository {
     State addState(State state);
     List<State> getAllStates();
     State getStateByAbbreviation(String abbrev);
+    byte[] getStateFlag(String abbrev);
+    byte[] getStateMap(String abbrev);
+    void removeAllStates();
 
     Customer addCustomer(Customer cust);
     List<Customer> getAllCustomers();
@@ -25,11 +28,13 @@ public interface Repository {
     User removeUser(String login);
     User getUser(String login);
     List<User> getAllUsers();
+    boolean isValidUser(String login, String pwd);
 
     Order getOrderById(int id);
     Order addOrder(Order order);
     Order removeOrder(int id);
     List<Order> getAllOrders(int customerId);
+    void removeAllOrders();
 
 
 }

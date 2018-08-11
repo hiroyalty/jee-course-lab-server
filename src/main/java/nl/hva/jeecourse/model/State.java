@@ -9,9 +9,17 @@ import java.util.Objects;
 @Entity
 public class State implements Serializable {
 
+    public State(String abbreviation, String name) {
+        setAbbreviation(abbreviation);
+        setName(name);
+    }
+
+    public State() {
+
+    }
+
     @Id
     @GeneratedValue
-
     private int id;
     private String abbreviation;
     private String name;

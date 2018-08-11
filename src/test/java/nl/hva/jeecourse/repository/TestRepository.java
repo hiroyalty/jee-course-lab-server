@@ -5,18 +5,36 @@ import nl.hva.jeecourse.model.Order;
 import nl.hva.jeecourse.model.State;
 import nl.hva.jeecourse.model.User;
 import nl.hva.jeecourse.repository.impl.RepositoryImpl;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
 
-import javax.inject.Inject;
+import java.io.*;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static junit.framework.TestCase.assertNull;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 
 public class TestRepository {
 
-    private Repository repo = new RepositoryImpl();
+    private static Repository repo;
+
+    @BeforeClass
+    public static void testBefore() {
+        repo = new RepositoryImpl();
+    }
+
+    @AfterClass
+    @Ignore
+    public static void testAfter() {
+        repo.removeAllOrders();
+        repo.removeAllCustomers();
+        repo.removeAllStates();
+    }
 
     @Test
     public void testAddingState() {
@@ -169,6 +187,7 @@ public class TestRepository {
     @Test
     public void testPaged() {
 
+        repo.removeAllOrders();
         repo.removeAllCustomers();
 
         for(int i=0;i<13;i++) {
@@ -291,7 +310,7 @@ public class TestRepository {
         assertEquals(oRec.getId(),o1.getId());
         assertEquals(oRec.getCustomer(),o1.getCustomer());
         assertEquals(oRec.getProductName(),o1.getProductName());
-        assertEquals(oRec.getItemCost(),o1.getItemCost());
+        assertEquals(oRec.getItemCost(),o1.getItemCost(),0.01);
 
         List<Order> orders = repo.getAllOrders(c.getId());
 
@@ -308,6 +327,37 @@ public class TestRepository {
 
     }
 
+    @Test
+    public void testFlag() throws IOException {
+
+        byte[] content = repo.getStateFlag("NH");
+
+        assertNotNull(content);
+    }
+
+    @Test
+    public void testMap() throws IOException {
+
+        byte[] content = repo.getStateMap("NH");
+
+        assertNotNull(content);
+    }
+
+    @Test
+    public void testMapNone() throws IOException {
+
+        byte[] content = repo.getStateMap("NNNN");
+
+        assertNotNull(content);
+    }
+
+    @Test
+    public void testFlagNone() throws IOException {
+
+        byte[] content = repo.getStateFlag("NNNN");
+
+        assertNotNull(content);
+    }
 
 
 

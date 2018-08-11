@@ -21,7 +21,7 @@ public class Customer implements Serializable {
     @JoinColumn(name = "fk_state")
     private State state;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "fk_customer")
     private List<Order> orders;
 
