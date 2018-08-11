@@ -23,6 +23,7 @@ public interface Repository {
     void modifyCustomer(Customer cust);
     List<Customer> getPagedCustomers(int pageNumber, int pageSize);
     void removeAllCustomers();
+    long getCustomerCount();
 
     User addUser(User user);
     User removeUser(String login);

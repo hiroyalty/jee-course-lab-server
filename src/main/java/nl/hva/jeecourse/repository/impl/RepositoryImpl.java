@@ -225,6 +225,21 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
+    public long getCustomerCount() {
+
+        EntityManager em = getEntityManager();
+
+        String sql = "SELECT COUNT(c) FROM Customer c";
+        Query q = em.createQuery(sql);
+        long count = (long)q.getSingleResult();
+
+        em.close();
+
+        return count;
+
+    }
+
+    @Override
     public User addUser(User user) {
 
         EntityManager em = getEntityManager();

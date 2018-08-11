@@ -147,7 +147,11 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jetty.version}</version>
                 <configuration>
+                    <reload>automatic</reload>
                     <scanIntervalSeconds>1</scanIntervalSeconds>
+                    <webApp>
+                        <contextPath>/</contextPath>
+                    </webApp>
                     <httpConnector>
                         <port>8095</port>
                     </httpConnector>

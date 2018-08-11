@@ -5,7 +5,7 @@
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="create"/>
             <property name="javax.persistence.jdbc.driver" value="org.h2.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:h2:./target/h2;create=true"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:h2:./target/h2;create=true;AUTO_SERVER=TRUE"/>
             <property name="eclipselink.target-database" value="org.eclipse.persistence.platform.database.H2Platform"/>
             <property name="eclipselink.logging.level.sql" value="FINE"/>
 
