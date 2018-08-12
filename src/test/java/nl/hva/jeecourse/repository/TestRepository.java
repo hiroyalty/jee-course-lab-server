@@ -4,6 +4,7 @@ import nl.hva.jeecourse.model.Customer;
 import nl.hva.jeecourse.model.Order;
 import nl.hva.jeecourse.model.State;
 import nl.hva.jeecourse.model.User;
+import nl.hva.jeecourse.repository.exception.InconsistentCustomerException;
 import nl.hva.jeecourse.repository.impl.RepositoryImpl;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -63,7 +64,7 @@ public class TestRepository {
     }
 
     @Test
-    public void testAddingCustomer() {
+    public void testAddingCustomer() throws InconsistentCustomerException {
 
         State state = new State();
         state.setAbbreviation("AZ");
@@ -91,8 +92,38 @@ public class TestRepository {
 
     }
 
+    @Test(expected = InconsistentCustomerException.class)
+    public void testAddingInconsistentCustomer() throws InconsistentCustomerException {
+
+        State state = new State();
+        state.setAbbreviation("AZ");
+        state.setName("Arizona");
+        state  = repo.addState(state);
+
+        State recovered = repo.getStateByAbbreviation("AZ");
+
+        Customer c = new Customer();
+        c.setFirstName("John");
+        c.setLastName("Martin");
+        c.setAddress("Lindenlaan, 34");
+        c.setCity("Zaandijk");
+        c.setGender("male");
+        c.setLatitude(33299);
+        c.setLongitude(-111963);
+        c.setState(null);
+
+        c = repo.addCustomer(c);
+
+        Customer custRec = repo.getCustomerById(c.getId());
+
+        assertEquals(custRec,c);
+        assertEquals(custRec.getState(),c.getState());
+
+    }
+
+
     @Test
-    public void testListingCustomers() {
+    public void testListingCustomers() throws InconsistentCustomerException {
         testAddingCustomer();
 
         List<Customer> custs = repo.getAllCustomers();
@@ -101,7 +132,7 @@ public class TestRepository {
     }
 
     @Test
-    public void testRemoveCustomer() {
+    public void testRemoveCustomer() throws InconsistentCustomerException {
 
         State state = new State();
         state.setAbbreviation("CA");
@@ -140,7 +171,7 @@ public class TestRepository {
     }
 
     @Test
-    public void testModifyCustomer() {
+    public void testModifyCustomer() throws InconsistentCustomerException {
 
         State state = new State();
         state.setAbbreviation("TX");
@@ -185,7 +216,7 @@ public class TestRepository {
 
 
     @Test
-    public void testPaged() {
+    public void testPaged() throws InconsistentCustomerException {
 
         repo.removeAllOrders();
         repo.removeAllCustomers();
@@ -277,7 +308,7 @@ public class TestRepository {
     }
 
     @Test
-    public void testOrder() {
+    public void testOrder() throws InconsistentCustomerException {
 
         State state = new State();
         state.setAbbreviation("IL");

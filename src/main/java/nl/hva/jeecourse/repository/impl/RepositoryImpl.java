@@ -5,6 +5,7 @@ import nl.hva.jeecourse.model.Order;
 import nl.hva.jeecourse.model.State;
 import nl.hva.jeecourse.model.User;
 import nl.hva.jeecourse.repository.Repository;
+import nl.hva.jeecourse.repository.exception.InconsistentCustomerException;
 
 import javax.enterprise.inject.Default;
 import javax.inject.Singleton;
@@ -126,7 +127,11 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Customer addCustomer(Customer cust) {
+    public Customer addCustomer(Customer cust) throws InconsistentCustomerException {
+
+        if(cust.getState() == null) {
+            throw new InconsistentCustomerException("missing state for customer: " + cust);
+        }
 
         EntityManager em = getEntityManager();
 
