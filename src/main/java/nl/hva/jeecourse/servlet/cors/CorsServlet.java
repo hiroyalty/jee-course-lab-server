@@ -11,7 +11,7 @@ public class CorsServlet extends HttpServlet {
     private void setAccessControlHeaders(HttpServletResponse resp) {
         resp.addHeader("Access-Control-Allow-Origin","http://localhost:8090");
         resp.addHeader("Access-Control-Allow-Headers","Content-Type, authorization, X-*");
-        resp.addHeader("Access-Control-Expose-Headers","*");
+        resp.addHeader("Access-Control-Expose-Headers","authorization");
         resp.addHeader("Access-Control-Allow-Methods","POST,GET,PUT,DELETE,OPTIONS");
         resp.addHeader("Access-Control-Allow-Credentials","true");
     }
